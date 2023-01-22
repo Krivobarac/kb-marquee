@@ -10,37 +10,27 @@
 //     display: flex;
 // }
 
+$space: 2rem;
+$demo-marquee_space: 2rem;
+$demo-marquee_duration: 6s;
+$demo-marquee_gap: $demo-marquee_space;
+
 @import url("https://fonts.googleapis.com/css2?family=Corben:wght@700&display=swap");
 
-* {
-  box-sizing: border-box;
-}
 
-body {
-  min-height: 100vh;
-}
 
-.demo_marquee-wrap {
-  --demo-marquee_space: 2rem;
-  display: grid;
-  align-content: center;
-  overflow: hidden;
-  gap: var(--demo-marquee_space);
-  width: 100%;
-  font-family: "Corben", system-ui, sans-serif;
-  font-size: 1.5rem;
-  line-height: 1.5;
-}
+
+
+
 
 .marquee {
-  --demo-marquee_duration: 60s;
-  --demo-marquee_gap: var(--demo-marquee_space);
+  
 
   display: flex;
   overflow: hidden;
-  user-select: none;
-  gap: var(--demo-marquee_gap);
-  transform: skewY(-3deg);
+  // user-select: none;
+  gap: $demo-marquee_gap;
+  // transform: skewY(-3deg);
 }
 
 .marquee__group {
@@ -48,10 +38,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  gap: var(--demo-marquee_gap);
+  gap: $demo-marquee_gap;
   min-width: 100%;
-  animation: scroll var(--demo-marquee_duration) linear infinite;
+  animation: scroll $demo-marquee_duration linear infinite;
 }
+
 
 @media (prefers-reduced-motion: reduce) {
   .marquee__group {
@@ -77,7 +68,7 @@ body {
 
 .marquee--reverse .marquee__group {
   animation-direction: reverse;
-  animation-delay: calc(var(--demo-marquee_duration) / -2);
+  animation-delay: calc($demo-marquee_duration / -2);
 }
 
 @keyframes scroll {
@@ -86,6 +77,6 @@ body {
   }
 
   100% {
-    transform: translateX(calc(-100% - var(--demo-marquee_gap)));
+    transform: translateX(calc(-100% - $demo-marquee_gap));
   }
 }

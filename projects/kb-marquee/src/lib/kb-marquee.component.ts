@@ -7,18 +7,18 @@ import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular
 })
 export class KbMarqueeComponent implements AfterViewInit {
   @ViewChild('marqueeGroup1') marqueeGroup1?: ElementRef;
-  @ViewChild('marqueeGroup2') marqueeGroup2?: ElementRef;
+  @ViewChild('marquee') marquee?: ElementRef;
   
   @Input() type: 'single' | 'multi' = 'single';
 
   ngAfterViewInit(): void {
-    if ( this.marqueeGroup1 && this.marqueeGroup2 ) {
+    if ( this.marqueeGroup1 && this.marquee ) {
       const marqueeGroupEl1 = (this.marqueeGroup1?.nativeElement as HTMLElement);
-      const marqueeGroupEl2 = (this.marqueeGroup2?.nativeElement as HTMLElement);
+      const marquee = (this.marquee?.nativeElement as HTMLElement);
 
       if (marqueeGroupEl1.hasChildNodes()) {
-        const clonedElements: Node[] = [this.marqueeGroup1 && (this.marqueeGroup1.nativeElement as HTMLElement).cloneNode(true)];
-        marqueeGroupEl2.append(...clonedElements)
+        const clonedElement: Node = this.marqueeGroup1 && (this.marqueeGroup1.nativeElement as HTMLElement).cloneNode(true);
+        marquee.append(clonedElement)
       }
     }
   }
