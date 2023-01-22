@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class MarqueeService {
+export class KbMarqueeService {
 
   constructor() { }
 }

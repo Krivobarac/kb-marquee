@@ -3,23 +3,23 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "marquee": {
+    "kb-marquee": {
       "projectType": "library",
-      "root": "projects/marquee",
-      "sourceRoot": "projects/marquee/src",
+      "root": "projects/kb-marquee",
+      "sourceRoot": "projects/kb-marquee/src",
       "prefix": "kb",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/marquee/ng-package.json"
+            "project": "projects/kb-marquee/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/marquee/tsconfig.lib.prod.json"
+              "tsConfig": "projects/kb-marquee/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/marquee/tsconfig.lib.json"
+              "tsConfig": "projects/kb-marquee/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -27,11 +27,108 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "tsConfig": "projects/marquee/tsconfig.spec.json",
+            "tsConfig": "projects/kb-marquee/tsconfig.spec.json",
             "polyfills": [
               "zone.js",
               "zone.js/testing"
             ]
+          }
+        }
+      }
+    },
+    "kb-marquee-sample": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/kb-marquee-sample",
+      "sourceRoot": "projects/kb-marquee-sample/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/kb-marquee-sample",
+            "index": "projects/kb-marquee-sample/src/index.html",
+            "main": "projects/kb-marquee-sample/src/main.ts",
+            "polyfills": [
+              "zone.js"
+            ],
+            "tsConfig": "projects/kb-marquee-sample/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/kb-marquee-sample/src/favicon.ico",
+              "projects/kb-marquee-sample/src/assets"
+            ],
+            "styles": [
+              "projects/kb-marquee-sample/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "kb-marquee-sample:build:production"
+            },
+            "development": {
+              "browserTarget": "kb-marquee-sample:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "kb-marquee-sample:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "tsConfig": "projects/kb-marquee-sample/tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/kb-marquee-sample/src/favicon.ico",
+              "projects/kb-marquee-sample/src/assets"
+            ],
+            "styles": [
+              "projects/kb-marquee-sample/src/styles.scss"
+            ],
+            "scripts": []
           }
         }
       }

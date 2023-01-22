@@ -10,8 +10,8 @@
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "paths": {
-      "marquee": [
-        "dist/marquee"
+      "kb-marquee": [
+        "dist/kb-marquee"
       ]
     },
     "noFallthroughCasesInSwitch": true,

@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { MarqueeService } from './marquee.service';
+import { KbMarqueeService } from './kb-marquee.service';
 
-describe('MarqueeService', () => {
-  let service: MarqueeService;
+describe('KbMarqueeService', () => {
+  let service: KbMarqueeService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(MarqueeService);
+    service = TestBed.inject(KbMarqueeService);
   });
 
   it('should be created', () => {
