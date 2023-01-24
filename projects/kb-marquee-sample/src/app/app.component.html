@@ -1,7 +1,62 @@
-<kb-marquee>
+<div class="example-1">
+  <kb-marquee>
     <img src='https://images.unsplash.com/photo-1546421845-6471bdcf3edf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NTk0MDQ4MDE&ixlib=rb-1.2.1&q=80&w=400' alt=''>
     <img src='https://images.unsplash.com/photo-1518378188025-22bd89516ee2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NTk0MDQ4MDE&ixlib=rb-1.2.1&q=80&w=400' alt=''>
     <img src='https://images.unsplash.com/photo-1571772805064-207c8435df79?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NTk0MDQ4MDE&ixlib=rb-1.2.1&q=80&w=400' alt=''>
-    <img src='https://images.unsplash.com/photo-1602067340370-bdcebe8d1930?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NTk0MDUyMTM&ixlib=rb-1.2.1&q=80&w=400' alt=''>
-    <img src='https://images.unsplash.com/photo-1508948956644-0017e845d797?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NTk0MDUyMTM&ixlib=rb-1.2.1&q=80&w=400' alt=''>
-</kb-marquee>
+    <!-- <img src='https://images.unsplash.com/photo-1602067340370-bdcebe8d1930?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NTk0MDUyMTM&ixlib=rb-1.2.1&q=80&w=400' alt=''>
+    <img src='https://images.unsplash.com/photo-1508948956644-0017e845d797?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NTk0MDUyMTM&ixlib=rb-1.2.1&q=80&w=400' alt=''> -->
+  </kb-marquee>
+</div>
+
+<br>
+
+<div class="skew-group">
+  <div class="example-2">
+    <kb-marquee [duration]="50" [gap]="200" [pause]="true" direction="right">
+      <i *ngFor="let icon of carouselIcons" class="fab" [class]="icon"></i>
+    </kb-marquee>
+  </div>
+
+  <div class="example-3">
+    <kb-marquee [duration]="50" [gap]="200" [pause]="true" direction="right">
+      <i *ngFor="let icon of carouselIcons" class="fab" [class]="icon"></i>
+    </kb-marquee>
+  </div>
+</div>
+
+<br>
+
+<div class="example-4">
+  <kb-marquee [pause]="true" [duration]="15">
+    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/1.png" alt="" /> 
+    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/2.png" alt="" />
+    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/3.png" alt="" />
+    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/4.png" alt="" />
+    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/5.png" alt="" />
+    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/6.png" alt="" />
+    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/7.png" alt="" />
+  </kb-marquee>
+</div>
+
+<br>
+
+<div class="example-5">
+  <kb-marquee direction="right">
+    <h1>MARQUEE</h1>
+  </kb-marquee>
+</div>
+
+<br>
+
+<div class="example-6">
+  <kb-marquee [gap]="20" [duration]="10" [pause]="true">
+    <div *ngFor="let image of cardImages; let index = index" class="card" style="width: 18rem;">
+      <img [src]="image" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Card title {{ index + 1 }}</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+    </div>
+  </kb-marquee>
+</div>
