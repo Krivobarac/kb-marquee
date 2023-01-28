@@ -14,6 +14,7 @@ export class KbMarqueeComponent implements AfterViewInit {
   @Input() gap: number = 0;
   @Input() pause: boolean = false;
   @Input() direction: `to-left` | `to-right` = 'to-left';
+  @Input() animationTiming: `linear` | `ease` | 'ease-in' | 'ease-out' | 'ease-in-out' = 'linear';
 
   marqueeElement?: HTMLElement;
   marqueeGroupElement1?: HTMLElement;
@@ -82,8 +83,8 @@ export class KbMarqueeComponent implements AfterViewInit {
       }`;
       document.styleSheets[0].insertRule(keyframes, 0);
 
-      this.marqueeGroupElement1.style.animation = `looping ${this.duration}s linear infinite`;
-      this.marqueeGroupElement2.style.animation = `looping ${this.duration}s linear infinite`;
+      this.marqueeGroupElement1.style.animation = `looping ${this.duration}s ${this.animationTiming} infinite`;
+      this.marqueeGroupElement2.style.animation = `looping ${this.duration}s ${this.animationTiming} infinite`;
       
       if (this.direction === 'to-right') {
         this.marqueeGroupElement1.style.animationDirection = 'reverse';
