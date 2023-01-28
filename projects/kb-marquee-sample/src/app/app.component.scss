@@ -32,11 +32,23 @@
 }
 
 .example-4 {
-  
+  transform:  rotate(90deg) ;
+  height: 500px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+
+  img {
+    transform: rotate(-90deg);
+    border-radius: 25px;
+  }
 }
 
 .example-5 {
   margin-top: 50px;
+  color: orangered;
 }
 
 .example-6 {
