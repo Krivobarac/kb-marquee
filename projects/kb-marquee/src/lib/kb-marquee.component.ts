@@ -1,64 +1,62 @@
 import { AfterViewInit, Component, ElementRef, Input, ViewChild, HostListener, OnInit } from '@angular/core';
-import { debounceTime, fromEvent } from 'rxjs';
 
 @Component({
   selector: 'kb-marquee',
   templateUrl: './kb-marque.component.html',
-  styleUrls: ['./kb-marquee.component.scss'],
+  styleUrls: ['./kb-marquee.component.scss']
 })
-export class KbMarqueeComponent implements OnInit, AfterViewInit {
-  @ViewChild('marqueeGroup') marqueeGroup?: ElementRef;
+export class KbMarqueeComponent implements AfterViewInit {
   @ViewChild('marquee') marquee?: ElementRef;
+  @ViewChild('marqueeGroup1') marqueeGroup1?: ElementRef;
+  @ViewChild('marqueeGroup2') marqueeGroup2?: ElementRef;
 
   @Input() duration: number = 5;
   @Input() gap: number = 0;
   @Input() pause: boolean = false;
-  @Input() direction: 'left' | 'right' = 'left';
+  @Input() direction: `to-left` | `to-right` = 'to-left';
 
   marqueeElement?: HTMLElement;
-  marqueeGroupElement?: HTMLElement;
-  clonedElement?: HTMLElement;
+  marqueeGroupElement1?: HTMLElement;
+  marqueeGroupElement2?: HTMLElement;
 
   @HostListener('window:resize', ['$event'])
   onResize() {
-    // this.setStyle();
-  }
-    
-  ngOnInit() {
-    // fromEvent(window, 'resize')  Doesn't work correctly
-    //   .pipe(debounceTime(150))
-    //   .subscribe(_ => this.onResize());
-  }
-
-  ngAfterViewInit(): void {
-    if ( this.marqueeGroup && this.marquee ) {
-      this.marqueeGroupElement = (this.marqueeGroup?.nativeElement as HTMLElement);
-      this.marqueeElement = (this.marquee?.nativeElement as HTMLElement);
-
-      if (this.marqueeGroupElement?.hasChildNodes()) {
-        const clonedEl = this.marqueeGroup && (this.marqueeGroup.nativeElement as HTMLElement).cloneNode(true);
-        this.marqueeElement.append(clonedEl)
-        this.clonedElement = clonedEl as HTMLElement;
-      }
-    }
-
     this.setStyle();
   }
 
-  private setStyle() {
-    if (this.marqueeElement && this.marqueeGroupElement && this.clonedElement) {
-      if (this.marqueeElement.offsetWidth > this.marqueeGroupElement.offsetWidth) {
-        this.marqueeGroupElement.style.minWidth = '100%';
-        this.marqueeGroupElement.style.justifyContent = 'space-around';
-        this.clonedElement.style.minWidth = '100%';
-        this.clonedElement.style.justifyContent = 'space-around';
-      } else {
-        this.marqueeGroupElement.style.minWidth = 'unset';
-        this.marqueeGroupElement.style.justifyContent = 'unset';
-        this.clonedElement.style.minWidth = 'unset';
-        this.clonedElement.style.justifyContent = 'unset';
+  ngAfterViewInit(): void {
+    this.cloneMarqueeGroup();
+    this.setStyle();
+  }
+
+  cloneMarqueeGroup() {
+    if (this.marqueeGroup1) {
+      this.marqueeElement = (this.marquee?.nativeElement as HTMLElement);
+      this.marqueeGroupElement1 = (this.marqueeGroup1?.nativeElement as HTMLElement);
+      this.marqueeGroupElement2 = (this.marqueeGroup2?.nativeElement as HTMLElement);
+
+      if (this.marqueeGroupElement1?.hasChildNodes()) {
+        this.marqueeGroupElement1.childNodes.forEach(childNode => {
+          this.marqueeGroup2?.nativeElement.append(childNode.cloneNode(true))
+        })
       }
-  
+    }
+  }
+
+  private setStyle() {
+    if (this.marqueeElement && this.marqueeGroupElement1 && this.marqueeGroupElement2) {
+      if (this.marqueeElement.offsetWidth > this.marqueeGroupElement1.offsetWidth) {
+        this.marqueeGroupElement1.style.minWidth = '100%';
+        this.marqueeGroupElement1.style.justifyContent = 'space-around';
+        this.marqueeGroupElement2.style.minWidth = '100%';
+        this.marqueeGroupElement2.style.justifyContent = 'space-around';
+      } else {
+        this.marqueeGroupElement1.style.minWidth = 'unset';
+        this.marqueeGroupElement1.style.justifyContent = 'unset';
+        this.marqueeGroupElement2.style.minWidth = 'unset';
+        this.marqueeGroupElement2.style.justifyContent = 'unset';
+      }
+      
       this.setMarqueAnimation();
 
       if (this.pause) {
@@ -71,7 +69,7 @@ export class KbMarqueeComponent implements OnInit, AfterViewInit {
   }
 
   setMarqueAnimation() {
-    if (this.marqueeGroupElement && this.clonedElement) {
+    if (this.marqueeGroupElement1 && this.marqueeGroupElement2) {
       var keyframes = `
       @keyframes looping {
         0% {
@@ -84,20 +82,20 @@ export class KbMarqueeComponent implements OnInit, AfterViewInit {
       }`;
       document.styleSheets[0].insertRule(keyframes, 0);
 
-      this.marqueeGroupElement.style.animation = `looping ${this.duration}s linear infinite`;
-      this.clonedElement.style.animation = `looping ${this.duration}s linear infinite`;
+      this.marqueeGroupElement1.style.animation = `looping ${this.duration}s linear infinite`;
+      this.marqueeGroupElement2.style.animation = `looping ${this.duration}s linear infinite`;
       
-      if (this.direction === 'right') {
-        this.marqueeGroupElement.style.animationDirection = 'reverse';
-        this.clonedElement.style.animationDirection = 'reverse';
+      if (this.direction === 'to-right') {
+        this.marqueeGroupElement1.style.animationDirection = 'reverse';
+        this.marqueeGroupElement2.style.animationDirection = 'reverse';
       }
     }
   }
 
   pauseAnimation(paused: boolean) {
-    if (this.marqueeGroupElement && this.clonedElement) {
-      this.marqueeGroupElement.style.animationPlayState = paused ? 'paused' : 'running';
-      this.clonedElement.style.animationPlayState = paused ? 'paused' : 'running';
+    if (this.marqueeGroupElement1 && this.marqueeGroupElement2) {
+      this.marqueeGroupElement1.style.animationPlayState = paused ? 'paused' : 'running';
+      this.marqueeGroupElement2.style.animationPlayState = paused ? 'paused' : 'running';
     }
   }
 }
