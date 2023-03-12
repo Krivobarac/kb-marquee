@@ -6,7 +6,8 @@
     "kb-marquee-sample start": "ng serve kb-marquee-sample",
     "kb-marquee-sample build": "ng build kb-marquee-sample",
     "kb-marquee-sample test": "ng test kb-marquee-sample",
-    "kb-marquee install": "npm install"
+    "kb-marquee install": "npm install",
+    "kb-marquee gh deploy": "ng deploy --base-href=kb-marquee-sample"
   },
   "private": true,
   "dependencies": {
@@ -27,6 +28,7 @@
     "@angular/cli": "~15.0.4",
     "@angular/compiler-cli": "^15.0.0",
     "@types/jasmine": "~4.3.0",
+    "angular-cli-ghpages": "^1.0.5",
     "jasmine-core": "~4.5.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.1.0",
