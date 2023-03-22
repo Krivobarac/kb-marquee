@@ -9,6 +9,9 @@
     "kb-marquee install": "npm install",
     "kb-marquee gh deploy": "ng deploy --base-href=kb-marquee-sample"
   },
+  "publishConfig": {
+    "registry": "http://localhost:4873/"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "^15.0.0",
