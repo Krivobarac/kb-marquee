@@ -1,6 +1,8 @@
-<div #marquee class="marquee" [style.gap]="gap + 'px'">
-  <div #marqueeGroup1 class="marquee__group" [style.gap]="gap + 'px'">
-    <ng-content></ng-content>
-  </div>
-  <div #marqueeGroup2 class="marquee__group" [style.gap]="gap + 'px'"></div>
+<div #marqueeGroup1 class="marquee__group" [style.gap]="gap + 'px'"
+  [@marqueeAnimation]="{value: animState, params: { duration: duration, animationTiming: animationTiming, distance: distance, distanceStartPosition: distanceStartPosition }}">
+  <ng-content></ng-content>
+</div>
+<div #marqueeGroup2 class="marquee__group" [style.gap]="gap + 'px'"
+  [@marqueeAnimation]="{value: animState, params: { duration: duration, animationTiming: animationTiming, distance: distance, distanceStartPosition: distanceStartPosition }}"
+  (@marqueeAnimation.done)="this.animState = !this.animState;">
 </div>

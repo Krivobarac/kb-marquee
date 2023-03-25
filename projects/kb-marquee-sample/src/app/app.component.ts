@@ -20,7 +20,7 @@ export class AppComponent {
     'fa-wordpress',
     'fa-aws',
     'fa-docker',
-    'fa-android',
+    'fa-android'
   ]
 
   cardImages = [
