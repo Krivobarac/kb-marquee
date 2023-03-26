@@ -1,10 +1,7 @@
 <div #marqueeGroup1 class="marquee__group" [style.gap]="gap + 'px'"
-  [ngClass]="{'space-around': isSpaceAround}"
-  [@marqueeAnimation]="{value: animState, params: { duration: duration, animationTiming: animationTiming, distance: distance, distanceStartPosition: distanceStartPosition }}">
+  [ngClass]="{'space-around': isSpaceAround}">
   <ng-content></ng-content>
 </div>
 <div #marqueeGroup2 class="marquee__group" [style.gap]="gap + 'px'"
-  [ngClass]="{'space-around': isSpaceAround}"
-  [@marqueeAnimation]="{value: animState, params: { duration: duration, animationTiming: animationTiming, distance: distance, distanceStartPosition: distanceStartPosition }}"
-  (@marqueeAnimation.done)="this.animState = !this.animState;">
+  [ngClass]="{'space-around': isSpaceAround}">
 </div>
