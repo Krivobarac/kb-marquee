@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, ViewChild, HostListener, HostBinding, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, ViewChild, HostListener, HostBinding, OnInit, ChangeDetectorRef } from '@angular/core';
 import { trigger, style, animate, keyframes, transition } from '@angular/animations';
 
 @Component({
@@ -15,7 +15,6 @@ import { trigger, style, animate, keyframes, transition } from '@angular/animati
   ])]
 })
 export class KbMarqueeComponent implements OnInit, AfterViewInit {
-  @ViewChild('marquee') marquee?: ElementRef;
   @ViewChild('marqueeGroup1') marqueeGroup1?: ElementRef;
   @ViewChild('marqueeGroup2') marqueeGroup2?: ElementRef;
 
@@ -26,9 +25,9 @@ export class KbMarqueeComponent implements OnInit, AfterViewInit {
   @Input() animationTiming: `linear` | `ease` | 'ease-in' | 'ease-out' | 'ease-in-out' = 'linear';
 
   animState = true;
-  marqueeElement?: HTMLElement;
-  marqueeGroupElement1?: HTMLElement;
-  marqueeGroupElement2?: HTMLElement;
+  isSpaceAround = false;
+
+  constructor(private changeDetector: ChangeDetectorRef) {}
 
   @HostBinding('style.gap') protected hostGap?: string;
 
@@ -43,16 +42,14 @@ export class KbMarqueeComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.cloneMarqueeGroup();
+    this.isSpaceAround = this.isBodyWiderThenMarqueGroup();
+    this.changeDetector.detectChanges();
   }
 
   protected cloneMarqueeGroup() {
     if (this.marqueeGroup1) {
-      this.marqueeElement = (this.marquee?.nativeElement as HTMLElement);
-      this.marqueeGroupElement1 = (this.marqueeGroup1?.nativeElement as HTMLElement);
-      this.marqueeGroupElement2 = (this.marqueeGroup2?.nativeElement as HTMLElement);
-
-      if (this.marqueeGroupElement1?.hasChildNodes()) {
-        this.marqueeGroupElement1.childNodes.forEach(childNode => {
+      if (this.marqueeGroup1.nativeElement.hasChildNodes()) {
+        this.marqueeGroup1.nativeElement.childNodes.forEach((childNode: any) => {
           this.marqueeGroup2?.nativeElement.append(childNode.cloneNode(true))
         })
       }
@@ -65,5 +62,9 @@ export class KbMarqueeComponent implements OnInit, AfterViewInit {
 
   protected get distance(): string {
     return this.direction === 'to-right' ? '0' : '-100%';
+  }
+
+  private isBodyWiderThenMarqueGroup(): boolean {
+    return document.body.offsetWidth > this.marqueeGroup1?.nativeElement.offsetWidth;
   }
 }
