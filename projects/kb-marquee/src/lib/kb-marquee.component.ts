@@ -1,18 +1,10 @@
 import { AfterViewInit, Component, ElementRef, Input, ViewChild, HostListener, HostBinding, OnInit, ChangeDetectorRef } from '@angular/core';
-import { trigger, style, animate, keyframes, transition } from '@angular/animations';
+import { style, animate, keyframes, AnimationBuilder, AnimationFactory } from '@angular/animations';
 
 @Component({
   selector: 'kb-marquee',
   templateUrl: './kb-marque.component.html',
-  styleUrls: ['./kb-marquee.component.scss'],
-  animations: [trigger('marqueeAnimation', [
-    transition('* => *', [
-      animate('{{ duration }}s {{ animationTiming }}', keyframes([
-        style({ transform: 'translateX({{ distanceStartPosition }})' }),
-        style({ transform: 'translateX({{ distance }})' })
-      ]))
-    ])
-  ])]
+  styleUrls: ['./kb-marquee.component.scss']
 })
 export class KbMarqueeComponent implements OnInit, AfterViewInit {
   @ViewChild('marqueeGroup1') marqueeGroup1?: ElementRef;
@@ -24,10 +16,14 @@ export class KbMarqueeComponent implements OnInit, AfterViewInit {
   @Input() direction: `to-left` | `to-right` = 'to-left';
   @Input() animationTiming: `linear` | `ease` | 'ease-in' | 'ease-out' | 'ease-in-out' = 'linear';
 
-  animState = true;
+  animPlayer1: any;
+  animPlayer2: any;
   isSpaceAround = false;
 
-  constructor(private changeDetector: ChangeDetectorRef) {}
+  constructor(
+    private changeDetector: ChangeDetectorRef,
+    private animationBuilder: AnimationBuilder
+  ) {}
 
   @HostBinding('style.gap') protected hostGap?: string;
 
@@ -44,6 +40,17 @@ export class KbMarqueeComponent implements OnInit, AfterViewInit {
     this.cloneMarqueeGroup();
     this.isSpaceAround = this.isBodyWiderThenMarqueGroup();
     this.changeDetector.detectChanges();
+
+    this.setAnimationPlayers();
+    this.playAnimations();
+
+    this.animPlayer2.onDone(() => {
+      this.restartAnimations();
+    });
+
+    if (this.pause) {
+      this.onHoverStopAnimations();
+    }
   }
 
   protected cloneMarqueeGroup() {
@@ -66,5 +73,41 @@ export class KbMarqueeComponent implements OnInit, AfterViewInit {
 
   private isBodyWiderThenMarqueGroup(): boolean {
     return document.body.offsetWidth > this.marqueeGroup1?.nativeElement.offsetWidth;
+  }
+
+  private get animationFactory(): AnimationFactory {
+    return this.animationBuilder.build([
+      animate(  `${this.duration}s ${this.animationTiming}`, keyframes([
+        style({ transform: `translateX(${this.distanceStartPosition})` }),
+        style({ transform: `translateX(${this.distance})` })
+      ]))
+    ]);
+  }
+
+  private setAnimationPlayers() {
+    this.animPlayer1 = this.animationFactory.create(this.marqueeGroup1?.nativeElement);
+    this.animPlayer2 = this.animationFactory.create(this.marqueeGroup2?.nativeElement);
+  }
+
+  private onHoverStopAnimations() {
+    this.marqueeGroup1?.nativeElement.addEventListener('mouseover', this.stopAnimations.bind(this));
+    this.marqueeGroup1?.nativeElement.addEventListener('touchstart', this.stopAnimations.bind(this));
+    this.marqueeGroup1?.nativeElement.addEventListener('mouseout', this.playAnimations.bind(this));
+    this.marqueeGroup1?.nativeElement.addEventListener('touchend', this.playAnimations.bind(this));
+  }
+
+  playAnimations() {
+    this.animPlayer1.play();
+    this.animPlayer2.play();
+  }
+
+  stopAnimations() {
+    this.animPlayer1.pause();
+    this.animPlayer2.pause();
+  }
+
+  restartAnimations() {
+    this.animPlayer1.restart();
+    this.animPlayer2.restart();
   }
 }
